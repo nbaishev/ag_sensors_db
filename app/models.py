@@ -23,5 +23,5 @@ class Controller(db.Model):
 class SensorData(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     created: Mapped[datetime.datetime] = mapped_column(server_default=text("CURRENT_TIMESTAMP"))
-    temperature: Mapped[str]
-    humidity: Mapped[str]
+    temperature: Mapped[float]
+    humidity: Mapped[float]
