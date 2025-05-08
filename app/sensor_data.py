@@ -14,13 +14,50 @@ bp = Blueprint('data', __name__, url_prefix='/data')
 @require_api_key
 def add_data(controller):
     data = request.get_json()
-    temperature = data.get('temperature')
-    humidity = data.get('humidity')
+    device_id = data.get('device_id')
+    water_flow = data.get('water_flow')
+    wind_speed = data.get('wind_speed')
+    wind_orientation = data.get('wind_orientation')
+    sun_insolation = data.get('sun_insolation')
+    soil_temp = data.get('soil_temp')
+    soil_hum = data.get('soil_hum')
+    air_temp = data.get('air_temp')
+    air_hum = data.get('air_hum')
+    air_pressure = data.get('air_pressure')
+    inside_air_temp = data.get('inside_air_temp')
+    inside_air_hum = data.get('inside_air_hum')
+    temp1 = data.get('temp1')
+    temp2 = data.get('temp2')
+    temp3 = data.get('temp3')
+    soil_temp1 = data.get('soil_temp1')
+    soil_hum1 = data.get('soil_hum1')
+    soil_temp2 = data.get('soil_temp2')
+    soil_hum2 = data.get('soil_hum2')
 
-    if not temperature or not humidity:
+    if not device_id:
         return jsonify({"message": "Invalid data"}), 400
 
-    new_data = SensorData(temperature=temperature, humidity=humidity)
+    new_data = SensorData(
+        device_id=device_id,
+        water_flow=water_flow,
+        wind_speed=wind_speed,
+        wind_orientation=wind_orientation,
+        sun_insolation=sun_insolation,
+        soil_temp=soil_temp,
+        soil_hum=soil_hum,
+        air_temp=air_temp,
+        air_hum=air_hum,
+        air_pressure=air_pressure,
+        inside_air_temp=inside_air_temp,
+        inside_air_hum=inside_air_hum,
+        temp1=temp1,
+        temp2=temp2,
+        temp3=temp3,
+        soil_temp1=soil_temp1,
+        soil_hum1=soil_hum1,
+        soil_temp2=soil_temp2,
+        soil_hum2=soil_hum2,
+    )
     db.session.add(new_data)
     db.session.commit()
 

@@ -23,5 +23,22 @@ class Controller(db.Model):
 class SensorData(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     created: Mapped[datetime.datetime] = mapped_column(server_default=text("CURRENT_TIMESTAMP"))
-    temperature: Mapped[float]
-    humidity: Mapped[float]
+    device_id: Mapped[int] = mapped_column(unique=True)
+    water_flow: Mapped[float]
+    wind_speed: Mapped[float]
+    wind_orientation: Mapped[float]
+    sun_insolation: Mapped[float]
+    soil_temp: Mapped[float]
+    soil_hum: Mapped[float]
+    air_temp: Mapped[float]
+    air_hum: Mapped[float]
+    air_pressure: Mapped[float]
+    inside_air_temp: Mapped[float]
+    inside_air_hum: Mapped[float]
+    temp1: Mapped[float]
+    temp2: Mapped[float]
+    temp3: Mapped[float]
+    soil_temp1: Mapped[float]
+    soil_hum1: Mapped[float]
+    soil_temp2: Mapped[float]
+    soil_hum2: Mapped[float]
