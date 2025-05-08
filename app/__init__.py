@@ -1,6 +1,7 @@
 import os
 
-from flask import Flask, render_template
+from flask import Blueprint, Flask
+from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
 from app.utils import create_first_admin
@@ -10,10 +11,6 @@ def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     jwt = JWTManager(app)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'project.db'),
-    )
 
     if test_config is None:
         from .config import DevelopmentConfig
@@ -21,18 +18,16 @@ def create_app(test_config=None):
     else:
         app.config.from_mapping(test_config)
 
+    CORS(app, resources={
+        r"/api/*": {
+            "origins": app.config.get('TRUSTED_DOMAINS').split(",")
+        }
+    })
+
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
-
-    @app.route("/")
-    def index():
-        return render_template("index.html")
 
     from app.database import db
     db.init_app(app)
@@ -45,9 +40,12 @@ def create_app(test_config=None):
             password=app.config['ADMIN_PASSWORD']
         )
 
+    api = Blueprint('api', __name__, url_prefix='/api')
     from . import sensor_data
-    app.register_blueprint(sensor_data.bp)
+    api.register_blueprint(sensor_data.bp)
     from . import auth
-    app.register_blueprint(auth.bp)
+    api.register_blueprint(auth.bp)
+
+    app.register_blueprint(api)
 
     return app

@@ -87,18 +87,3 @@ def register_controller():
     db.session.commit()
 
     return jsonify({"message": "Sensor registered", "api_key": new_sensor.api_key}), 201
-
-
-@bp.route('/plot', methods=['POST'])
-def plot():
-    data = request.get_json()
-    sensor_name = data.get("sensor_name")
-
-    if not sensor_name:
-        return jsonify({"error": "Sensor name is required"}), 400
-
-    new_sensor = Controller(sensor_name=sensor_name)
-    db.session.add(new_sensor)
-    db.session.commit()
-
-    return jsonify({"message": "Sensor registered", "api_key": new_sensor.api_key}), 201

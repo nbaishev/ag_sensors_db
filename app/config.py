@@ -18,10 +18,11 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DB_SERVER = 'localhost'
+    TRUSTED_DOMAINS = os.getenv("TRUSTED_DOMAINS", "localhost")
     SECRET_KEY = os.getenv("SECRET_KEY", "secret")
     DB_NAME = os.getenv("DB_NAME", "postgres")
-    DB_USER = os.getenv("POSTGRES_USER", "postgres")
-    DB_PASSWORD = os.getenv("POSTGRES_PASSWORD", "postgres")
+    DB_USER = os.getenv("DB_USER", "postgres")
+    DB_PASSWORD = os.getenv("DB_PASSWORD", "postgres")
     DB_HOST = os.getenv("DB_HOST", "db")
     DB_PORT = os.getenv("DB_PORT", "5432")
     SQLALCHEMY_DATABASE_URI = (
