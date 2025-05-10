@@ -69,7 +69,7 @@ def add_data(controller):
 def get_data():
     data = SensorData.query.all()
     result = [
-        {"device_id": d.device_d,
+        {"device_id": d.device_id,
          "timestamp": d.created,
          "water_flow": d.temperature,
          "wind_speed": d.wind_speed,
