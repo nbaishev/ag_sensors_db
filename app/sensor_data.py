@@ -71,7 +71,7 @@ def get_data():
     result = [
         {"device_id": d.device_id,
          "timestamp": d.created,
-         "water_flow": d.temperature,
+         "water_flow": d.water_flow,
          "wind_speed": d.wind_speed,
          "wind_orientation": d.wind_orientation,
          "sun_insolation": d.sun_insolation,
