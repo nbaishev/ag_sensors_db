@@ -68,7 +68,28 @@ def add_data(controller):
 @jwt_required()
 def get_data():
     data = SensorData.query.all()
-    result = [{"timestamp": d.created, "temperature": d.temperature, "humidity": d.humidity} for d in data]
+    result = [
+        {"device_id": d.device_d,
+         "timestamp": d.created,
+         "water_flow": d.temperature,
+         "wind_speed": d.wind_speed,
+         "wind_orientation": d.wind_orientation,
+         "sun_insolation": d.sun_insolation,
+         "soil_temp": d.soil_temp,
+         "soil_hum": d.soil_hum,
+         "air_temp": d.air_temp,
+         "air_hum": d.air_hum,
+         "air_pressure": d.air_pressure,
+         "inside_air_temp": d.inside_air_temp,
+         "inside_air_hum": d.inside_air_hum,
+         "temp1": d.temp1,
+         "temp2": d.temp2,
+         "temp3": d.temp3,
+         "soil_temp1": d.soil_temp1,
+         "soil_hum1": d.soil_hum1,
+         "soil_temp2": d.soil_temp2,
+         "soil_hum2": d.soil_hum2} for d in data
+    ]
     return jsonify(result)
 
 
